@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from skimage import color, feature
+
+from utils import resize_images
 
 
 def plot_sample(data, labels, label_names, img_per_class=10):
@@ -19,6 +22,22 @@ def plot_sample(data, labels, label_names, img_per_class=10):
 
     plt.show();
 
+def plot_sample_hog_features(data, num_images=5):
+    """Plot HOG features of num_images sample images."""
+    random_indices = np.random.choice(
+            data.shape[0], num_images, replace=False)
+
+    fig, ax = plt.subplots(2, num_images, figsize=(10, 10))
+    for i, index in enumerate(random_indices):
+        img = data[index]
+        gray_img = color.rgb2gray(img)
+        hog_vec, hog_vis = feature.hog(
+            gray_img, visualise=True, block_norm='L2-Hys')
+        ax[0, i].imshow(img)
+        ax[0, i].axis('off')
+        ax[1, i].imshow(hog_vis)
+        ax[1, i].axis('off')
+    plt.show();
 
 def plot_projection(data, labels, label_names, title):
     """
@@ -38,7 +57,6 @@ def plot_projection(data, labels, label_names, title):
     plt.clim(-0.5, 9.5)
     plt.title(title)
     plt.show();
-
 
 def plot_multiple_tsne_embeddings(
         cnn_codes_tsne_0,
