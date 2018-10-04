@@ -23,6 +23,7 @@ def plot_sample(data, labels, label_names, img_per_class=10):
 
     plt.show();
 
+
 def plot_sample_hog_features(data, num_images=5):
     """Plot HOG features of num_images sample images."""
     random_indices = np.random.choice(
@@ -39,6 +40,7 @@ def plot_sample_hog_features(data, num_images=5):
         ax[1, i].imshow(hog_vis)
         ax[1, i].axis('off')
     plt.show();
+
 
 def plot_projection(data, labels, label_names, title):
     """
@@ -58,6 +60,7 @@ def plot_projection(data, labels, label_names, title):
     plt.clim(-0.5, 9.5)
     plt.title(title)
     plt.show();
+
 
 def plot_multiple_tsne_embeddings(
         cnn_codes_tsne_0,
@@ -105,6 +108,7 @@ def plot_multiple_tsne_embeddings(
     plt.clim(-0.5, 9.5)
     plt.show();
 
+
 def plot_sample_augmented(
         X,
         y,
@@ -143,4 +147,20 @@ def plot_sample_augmented(
         plt.imshow(X_augmented[i])
         plt.axis('off')
         plt.title(label_names[labels[i]])
+    plt.show();
+
+
+def plot_loss_and_acc(history):
+    """Plot loss and accuracy graphs from Keras history object. """
+    acc = history.history['acc']
+    val_acc = history.history['val_acc']
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+    num_epochs = len(acc)
+
+    plt.plot(np.arange(num_epochs), acc, label='acc')
+    plt.plot(np.argane(num_epochs), val_acc, label='val_acc')
+    plt.plot(np.arange(num_epochs), loss, label='loss')
+    plt.plot(np.arange(num_epochs), val_loss, label='val_loss')
+    plt.legend()
     plt.show();
