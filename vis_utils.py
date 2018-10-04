@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.preprocessing.image import ImageDataGenerator
 from skimage import color, feature
 
 from utils import resize_images
@@ -102,4 +103,44 @@ def plot_multiple_tsne_embeddings(
 
     plt.colorbar(ticks=range(10), format=colorbar_formatter)
     plt.clim(-0.5, 9.5)
+    plt.show();
+
+def plot_sample_augmented(
+        X,
+        y,
+        label_names,
+        n_images=5,
+        target_size=(224, 224, 3),
+        rotation_range=20,
+        width_shift_range=0.1,
+        height_shift_range=0.1,
+        shear_range=0.1,
+        zoom_range=0.1,
+        horizontal_flip=True,
+):
+    """Plot a sample of augmented images."""
+
+    indices = np.random.choice(X.shape[0], n_images, replace=False)
+    images = X[indices]
+    labels = y[indices]
+
+    augmenter = ImageDataGenerator(
+        rotation_range=rotation_range,
+        width_shift_range=width_shift_range,
+        height_shift_range=height_shift_range,
+        shear_range=shear_range,
+        zoom_range=zoom_range,
+        horizontal_flip=horizontal_flip,
+    )
+
+    X_resized = resize_images(images, target_size, preserve_range=False)
+    X_augmented = np.array(
+        [augmenter.random_transform(x) for x in X_resized])
+
+    plt.figure(figsize=(20, 20))
+    for i in range(n_images):
+        plt.subplot(1, n_images, i + 1)
+        plt.imshow(X_augmented[i])
+        plt.axis('off')
+        plt.title(label_names[labels[i]])
     plt.show();
