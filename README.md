@@ -11,6 +11,6 @@ A number of models are fitted:
 * Fine tuning with data augmentation
 
 Both development and training were conducted on Google Colab.
-If you want to recreate Google Colab environment locally, `pip install -r requirements.txt` in your virtualennv.
+If you want to recreate Google Colab environment locally, `pip install -r requirements.txt` in your virtualenv.
 
 In `custom_resnet` directory you can find code needed to perform transfer learning with ResNet50 in Keras. It was adapted from [`keras-applications`](https://github.com/keras-team/keras-applications) by Keras Team and [`keras-resnet`](https://github.com/broadinstitute/keras-resnet) by Broad Institute. 
